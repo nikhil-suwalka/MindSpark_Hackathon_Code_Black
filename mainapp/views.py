@@ -32,3 +32,6 @@ def login(request):
 
 def logout(request):
     pass
+
+def home(request):
+    return render(request, 'index.html', context={"user": request.user})
