@@ -29,5 +29,5 @@ urlpatterns = [
     path('orders/otp', aadhar_otp, name="aadhar_otp"),
     path('orders/prescriptions/<int:p_id>', prescription, name="prescription"),
     path('orders/complete/<int:p_id>', order_complete, name="order_complete"),
-
+    path('prescribe/create', prescription_create, name="prescription_create"),
 ]

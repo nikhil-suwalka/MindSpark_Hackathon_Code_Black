@@ -156,7 +156,7 @@ def getPrescriptions(aadhar_no):
     arr = []
     for prescription in prescriptions:
         dict1 = {"prescription_id": prescription.id, "date": prescription.date.strftime("%d/%m/%Y"),
-                 "allowed_frequency": prescription.allowed_frequency, "given": prescription.given}
+                  "given": prescription.given}
         doc = User1.objects.filter(email=prescription.doctor_id).get()
         dict1["doctor_name"] = doc.first_name + " " + doc.last_name
 
@@ -173,6 +173,7 @@ def getMedicinesFromPrescription(prescription_id):
         current_medicine = Medicine.objects.filter(pk=medicine.medicine_id.pk).get()
         dict1["name"] = current_medicine.name
         dict1["type"] = current_medicine.type
+        dict1["allowed_frequency"] = current_medicine.allowed_frequency
         arr.append(dict1)
 
     return arr
@@ -200,3 +201,25 @@ def order_complete(request, p_id):
                   context={"aadhar": request.session["aadhar"],
                            "prescriptions": getPrescriptions(request.session["aadhar"]),
                            "patient_name": patient_name})
+
+def prescription_create(request):
+    prescription_form = PrescriptionForm(request.POST)
+
+    # Todo: kahi se lao
+    patient_id = 1
+    prescription_ob = Prescription.objects.create(doctor_id=request.user.pk, patient_id= patient_id)
+
+    context = {'prescription_form': prescription_form, "prescription_id" : prescription_ob.id}
+    return render(request, 'add_prescription.html', context)
+
+def get_medicines_from_prescription_id(pres_id):
+    arr = []
+
+    medicine_pres_ob = MedicinePrescription.objects.filter(pres_id=pres_id).all()
+
+    for medicine in medicine_pres_ob:
+        dict1 = {"medicine": str(medicine.medicine_id), "quantity": medicine.quantity}
+
+
+def add_medicion_in_prescription(pres_id, med_id, qty):
+    MedicinePrescription.objects.create(pres_id=pres_id, medicine_id=med_id, quantity=qty)

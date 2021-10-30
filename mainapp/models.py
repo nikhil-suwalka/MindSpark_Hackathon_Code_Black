@@ -41,14 +41,16 @@ class User1(AbstractUser):
 class Medicine(models.Model):
     name = models.CharField(blank=False, null=False, max_length=100)
     type = models.CharField(blank=False, null=False, max_length=100)
+    TYPES = ((0, "One time"), (1, "Multiple"))
+    allowed_frequency = models.IntegerField(default=1, choices=TYPES)
 
+    def __str__(self):
+        return str(self.name)
 
 class Prescription(models.Model):
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="prescription_patient_id")
     doctor_id = models.ForeignKey(User1, on_delete=models.CASCADE, related_name="prescription_doctor_id")
-    date = models.DateTimeField(blank=False, null=False)
-    TYPES = ((0, "One time"), (1, "Multiple"))
-    allowed_frequency = models.IntegerField(default=1, choices=TYPES)
+    date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     given = models.BooleanField(default=False)
 
 
@@ -56,3 +58,4 @@ class MedicinePrescription(models.Model):
     pres_id = models.ForeignKey(Prescription, on_delete=models.CASCADE, related_name="med_pres_prescription_id")
     medicine_id = models.ForeignKey(Medicine, on_delete=models.CASCADE, related_name="med_pres_medicine_id")
     quantity = models.IntegerField(blank=False, null=False)
+

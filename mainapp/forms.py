@@ -41,3 +41,8 @@ class OTPForm(forms.ModelForm):
     class Meta:
         model = OTP
         fields = ['otp']
+
+class PrescriptionForm(forms.ModelForm):
+    class Meta:
+        model = MedicinePrescription
+        fields ="__all__"
