@@ -33,4 +33,9 @@ urlpatterns = [
     path('prescribe/create', prescription_create, name="prescription_create"),
     path('prescribe/create/<int:p_id>', prescription_create_with_id, name="prescription_create_with_id"),
     path('prescribe/delete/<int:p_id>', prescription_delete_with_id, name="prescription_delete_with_id"),
+    path('approve/<int:license_no>', approve, name="approve_id"),
+    path('approve/', approve, name="approve"),
+
+
+
 ]

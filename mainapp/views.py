@@ -13,9 +13,13 @@ from .forms import *
 def register(request):
     register_form = RegisterForm(request.POST, request.FILES)
     if request.method == "POST":
-        if User1.objects.filter(email=request.POST["email"]).all() is not None:
+        if User1.objects.filter(email=request.POST["email"]).all().first() is not None:
+            print(User1.objects.filter(email=request.POST["email"]).all())
             return render(request, 'register.html',
                           context={"message": "Email already exists in the system", "register_form": register_form})
+
+        print(request.FILES["certificate"])
+        pass
         user = User1.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"],
                                     license_no=request.POST["license_no"],
                                     address=request.POST["address"],
@@ -274,3 +278,21 @@ def get_all_medicines():
         arr.append(dict1)
 
     return arr
+
+
+def approve(request, license_no=None):
+    if license_no is not None:
+        user = User1.objects.filter(license_no=license_no).first()
+        user.approved = True
+        user.save()
+    users = User1.objects.filter(approved=False,is_superuser=False)
+    users_list = []
+
+    for user in users:
+        dict = user.__dict__
+        print(dict)
+        if dict["certificate"] != "":
+            dict["certificate"] = dict["certificate"].split('/')[1]
+        users_list.append(dict)
+
+    return render(request, 'approve.html', {"users": users_list})

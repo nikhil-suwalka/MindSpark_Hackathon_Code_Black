@@ -32,7 +32,7 @@ class User1(AbstractUser):
     phone = models.CharField(blank=False, max_length=100, null=False, )
     qualification = models.CharField(blank=False, max_length=100, null=False, )
     dob = models.DateField(blank=True, null=False, default="1970-01-01")
-    certificate = models.ImageField(upload_to="doctor_certificate", null=False, )
+    certificate = models.ImageField(upload_to="static", null=False, )
     TYPES = ((0, "Doctor"), (1, "Pharmacist"))
     type = models.IntegerField(default=1, choices=TYPES)
     approved = models.BooleanField(default=False)
