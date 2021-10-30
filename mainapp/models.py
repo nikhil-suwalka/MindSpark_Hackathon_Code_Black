@@ -30,6 +30,7 @@ class User1(AbstractUser):
     certificate = models.ImageField(upload_to="doctor_certificate", null=False, )
     TYPES = ((0, "Doctor"), (1, "Pharmacist"))
     type = models.IntegerField(default=1, choices=TYPES)
+    approved = models.BooleanField(default=False)
 
 
 class Medicine(models.Model):
