@@ -100,7 +100,8 @@ def generateOTP():
 
 def aadhar(request):
     context = {'aadhar_form': AadharForm(request.POST)}
-
+    request.session.pop("otp", None)
+    request.session.modified = True
     if request.method == "POST":
         otp = generateOTP()
         print(request.POST["aadhar_no"])
@@ -111,7 +112,6 @@ def aadhar(request):
             otp_object.save()
         else:
             OTP.objects.create(aadhar=request.POST["aadhar_no"], otp=otp)
-
         patient = Patient.objects.filter(aadhar_no=request.POST["aadhar_no"]).first()
         if patient:
             send_mail(
@@ -132,13 +132,21 @@ def aadhar(request):
 
 
 def aadhar_otp(request):
+    patient_ob = Patient.objects.filter(aadhar_no=request.session["aadhar"]).first()
+    patient_name = patient_ob.first_name + " " + patient_ob.last_name
+    print(request.session)
+    if request.session.get("otp", False):
+        return render(request, "patient_pharma_prescriptions.html",
+                      context={"aadhar": request.session["aadhar"],
+                               "prescriptions": getPrescriptions(request.session["aadhar"]),
+                               "patient_name": patient_name,
+                               "user_type": request.user.type
+                               })
+    print("hello")
     otp = OTP.objects.filter(aadhar=request.POST["aadhar"]).first().otp
-    print(request.POST, otp)
-    request.session["otp"] = request.POST["otp"]
-    if request.POST["otp"] == str(otp):
-        patient_ob = Patient.objects.filter(aadhar_no=request.POST["aadhar"]).first()
-        patient_name = patient_ob.first_name + " " + patient_ob.last_name
 
+    if request.POST["otp"] == str(otp):
+        request.session["otp"] = otp
         return render(request, "patient_pharma_prescriptions.html",
                       context={"aadhar": request.POST["aadhar"],
                                "prescriptions": getPrescriptions(request.POST["aadhar"]),
@@ -153,10 +161,10 @@ def aadhar_otp(request):
 
 def getPrescriptions(aadhar_no):
     patient = Patient.objects.filter(aadhar_no=aadhar_no).first()
-    prescriptions = Prescription.objects.filter(patient_id=patient.id).all()
+    prescriptions = Prescription.objects.filter(patient_id=patient.id).order_by("-date").all()
     arr = []
     for prescription in prescriptions:
-        dict1 = {"prescription_id": prescription.id, "date": prescription.date.strftime("%d/%m/%Y"),
+        dict1 = {"prescription_id": prescription.id, "date": prescription.date.strftime("%d/%m/%Y %H:%M"),
                  "given": prescription.given}
         doc = User1.objects.filter(email=prescription.doctor_id).get()
         dict1["doctor_name"] = doc.first_name + " " + doc.last_name
@@ -195,7 +203,7 @@ def order_complete(request, p_id):
     p.given = True
     p.save()
 
-    patient_ob = Patient.objects.filter(aadhar_no=request.POST["aadhar"]).first()
+    patient_ob = Patient.objects.filter(aadhar_no=request.session["aadhar"]).first()
     patient_name = patient_ob.first_name + " " + patient_ob.last_name
 
     return render(request, "patient_pharma_prescriptions.html",
@@ -236,7 +244,8 @@ def prescription_delete_with_id(request, p_id):
     patient = Patient.objects.filter(aadhar_no=request.session["aadhar"]).first()
     context = {"prescription_id": request.session["prescription_id"],
                "patient_name": patient.first_name + " " + patient.last_name,
-               "medicines": get_medicines_from_prescription_id(request.session["prescription_id"]), "user_type": request.user.type}
+               "medicines": get_medicines_from_prescription_id(request.session["prescription_id"]),
+               "user_type": request.user.type}
     return render(request, 'add_prescription.html', context)
 
 

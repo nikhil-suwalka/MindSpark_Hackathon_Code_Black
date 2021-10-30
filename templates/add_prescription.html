@@ -10,12 +10,22 @@
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start" style="margin-top: 10px;"></div>
                 <div class="col">
-                   {% if user_type == 0 %}
+                    {% if user_type == 0 %}
+                        <button class="btn btn-danger"
+                                style="border: none;width: 151px;height: 37px;color: rgb(255,255,255);background: #8d87e3;margin-top: 10px;"
+                                type="button"
+                                onclick="location.href='{% url 'prescription_create_with_id' prescription_id %}'">Add
+                            Medicine
+                        </button>
+                    {% endif %}
+                </div>
+                <div class="col">
                     <button class="btn btn-danger"
                             style="border: none;width: 151px;height: 37px;color: rgb(255,255,255);background: #8d87e3;margin-top: 10px;"
-                            type="button" onclick="location.href='{% url 'prescription_create_with_id' prescription_id %}'">Add Medicine
+                            type="button"
+                            onclick="location.href='{% url 'aadhar_otp'%}'">Back
+                        Medicine
                     </button>
-                    {% endif %}
                 </div>
             </div>
             <div class="row">
