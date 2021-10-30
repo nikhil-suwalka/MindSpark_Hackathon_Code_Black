@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_tags %}
+{% load widget_tweaks %}
+{% block main %}
+    <div style="margin-top: 40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2 style="width: 343px;">Doctors Registeration Requests</h2>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end align-self-start" style="margin-top: 10px;"></div>
+                <div class="col">
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger"
+                            style="border: none;width: 151px;height: 37px;color: rgb(255,255,255);background: #8d87e3;margin-top: 10px;"
+                            type="button"
+                            onclick="location.href='{% url 'home' %}'">Back
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="example" style="margin-bottom: 50px;margin-top: 10px"
+                           class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Qualification</th>
+                            <th>City</th>
+                            <th>License No</th>
+                            <th>Certificate</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if users|length < 1 %}
+                            <td colspan="6" style="text-align: center;">There are currently no requests</td>
+                        {% endif %}
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.first_name }}&nbsp;{{ user.last_name }}</td>
+                                {%  if user.type == 0 %}
+                                <td>Doctor</td>
+                                {% elif user.type == 1 %}
+                                <td>Pharmacist</td>
+                                {% endif %}
+                                <td>{{ user.qualification }}</td>
+                                <td>{{ user.city }}</td>
+                                <td>{{ user.license_no }}</td>
+                                <td><a target="_blank"
+                                    href="{% static user.certificate %}"><img
+                                            style="max-height: 50px;max-width: 50px"
+                                            src="{% static user.certificate %}  "
+                                            alt="">
+
+                                </a>
+                                </td>
+                                <td>
+                                    <button onclick="location.href='{% url 'approve_id' user.license_no %}'"
+                                            type="button" class="btn btn-success"><i
+                                            class="fas fa-check d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

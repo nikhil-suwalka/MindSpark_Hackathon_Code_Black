@@ -122,6 +122,7 @@ STATICFILES_DIRS = [
     '/static/img',
     '/static/fonts',
     '/static/bootstrap',
+    '/doctor_certificate'
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
