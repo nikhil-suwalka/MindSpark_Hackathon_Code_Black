@@ -25,3 +25,7 @@ def register(request):
     register_form = UserForm(request.POST, request.FILES)
     context = {'register_form': register_form}
     return render(request, 'register.html', context)
+
+
+def login(request):
+    pass
