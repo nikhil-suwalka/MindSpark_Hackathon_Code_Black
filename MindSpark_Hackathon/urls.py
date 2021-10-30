@@ -23,6 +23,6 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
-    path('profile/', profile, name="profile"),
-
+    path('prescribe/', prescribe, name="prescribe"),
+    path('orders/', orders, name="orders")
 ]

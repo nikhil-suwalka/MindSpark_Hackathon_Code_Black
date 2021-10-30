@@ -7,7 +7,10 @@ from .forms import *
 
 
 def register(request):
+    register_form = RegisterForm(request.POST, request.FILES)
     if request.method == "POST":
+        if User1.objects.filter(email=request.POST["email"]).all() is not None:
+            return render(request, 'register.html', context={"message": "Email already exists in the system", "register_form": register_form})
         user = User1.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"],
                                     license_no=request.POST["license_no"],
                                     address=request.POST["address"],
@@ -24,9 +27,9 @@ def register(request):
                                     )
         user.set_password(request.POST["password"])
         user.save()
-        return render(request, 'login.html')
+        login_form = LoginForm(request.POST)
+        return render(request, 'login.html', {"login_form": login_form})
 
-    register_form = RegisterForm(request.POST, request.FILES)
     context = {'register_form': register_form}
     return render(request, 'register.html', context)
 
@@ -80,3 +83,9 @@ def logout_view(request):
 
 def home(request):
     return render(request, 'index.html', context={"user": request.user})
+
+def prescribe(request):
+    pass
+
+def orders(request):
+    pass
