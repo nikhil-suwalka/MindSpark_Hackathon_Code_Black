@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render
 from .forms import *
 
@@ -19,16 +19,37 @@ def register(request):
                                     dob=request.POST["dob"],
                                     certificate=request.FILES["certificate"],
                                     type=request.POST["type"],
-                                    username=request.POST["license_no"],
+                                    username=request.POST["email"],
+                                    email=request.POST["email"]
                                     )
+        user.set_password(request.POST["password"])
         user.save()
+        return render(request, 'login.html')
 
-    register_form = UserForm(request.POST, request.FILES)
+    register_form = RegisterForm(request.POST, request.FILES)
     context = {'register_form': register_form}
     return render(request, 'register.html', context)
 
 
-def login(request):
+def login_view(request):
+    if request.method == "POST":
+
+        user = authenticate(username=request.POST["email"], password=request.POST["password"])
+        print(user, request.POST["password"], request.POST["email"])
+        if not user:
+            login_form = LoginForm(request.POST)
+            return render(request, 'login.html', context={"message": "Invalid credentials", "login_form": login_form})
+
+        else:
+            login(request, user=user)
+            return home(request)
+
+    login_form = LoginForm(request.POST)
+    context = {'login_form': login_form}
+
+    return render(request, 'login.html', context)
+
+def profile(request):
     pass
 
 
