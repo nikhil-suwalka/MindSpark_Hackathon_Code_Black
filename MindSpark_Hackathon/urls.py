@@ -24,10 +24,11 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('profile/', profile, name="profile"),
-    path('prescribe/', prescribe, name="prescribe"),
     path('orders/', aadhar, name="orders"),
     path('orders/otp', aadhar_otp, name="aadhar_otp"),
     path('orders/prescriptions/<int:p_id>', prescription, name="prescription"),
     path('orders/complete/<int:p_id>', order_complete, name="order_complete"),
+    path('prescribe/', aadhar, name="prescribe"),
     path('prescribe/create', prescription_create, name="prescription_create"),
+
 ]

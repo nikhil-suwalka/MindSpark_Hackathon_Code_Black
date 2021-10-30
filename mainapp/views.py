@@ -188,6 +188,9 @@ def prescription(request, p_id):
                       "user_type": user_type
                   })
 
+def prescription_create(request):
+    pass
+
 
 def order_complete(request, p_id):
     p = Prescription.objects.filter(pk=p_id).get()
