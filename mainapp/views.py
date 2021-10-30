@@ -16,7 +16,7 @@ def register(request):
                                     phone=request.POST["phone"],
                                     qualification=request.POST["qualification"],
                                     dob=request.POST["dob"],
-                                    certificate=request.POST["certificate"],
+                                    certificate=request.FILES["certificate"],
                                     type=request.POST["type"],
                                     username=request.POST["license_no"],
                                     )
