@@ -47,6 +47,7 @@ class Medicine(models.Model):
     def __str__(self):
         return str(self.name)
 
+
 class Prescription(models.Model):
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="prescription_patient_id")
     doctor_id = models.ForeignKey(User1, on_delete=models.CASCADE, related_name="prescription_doctor_id")
@@ -59,3 +60,7 @@ class MedicinePrescription(models.Model):
     medicine_id = models.ForeignKey(Medicine, on_delete=models.CASCADE, related_name="med_pres_medicine_id")
     quantity = models.IntegerField(blank=False, null=False)
 
+
+class MedicineCsv(models.Model):
+    file = models.FileField(upload_to="medicine_csv", null=False)
+    date = models.DateTimeField(blank=False, null=False, auto_now_add=True)

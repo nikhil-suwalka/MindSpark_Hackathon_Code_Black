@@ -33,4 +33,6 @@ urlpatterns = [
     path('prescribe/create', prescription_create, name="prescription_create"),
     path('prescribe/create/<int:p_id>', prescription_create_with_id, name="prescription_create_with_id"),
     path('prescribe/delete/<int:p_id>', prescription_delete_with_id, name="prescription_delete_with_id"),
+    path('add_medicines/', add_medicines_csv, name="add_medicines"),
+    path('add_medicines_from_csv/', add_medicines_from_csv_view, name="add_medicines_from_csv_view"),
 ]

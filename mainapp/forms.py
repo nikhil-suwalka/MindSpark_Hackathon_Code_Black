@@ -32,6 +32,20 @@ class ProfileForm(forms.ModelForm):
         fields = ['email', "license_no", "first_name", "last_name", "address", "pincode", "city", "state",
                   "qualification", "dob"]
 
+        widgets = {
+            'dob': widgets.DateInput(attrs={'type': 'date'})
+        }
+
+
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = "__all__"
+
+        widgets = {
+            'dob': widgets.DateInput(attrs={'type': 'date'})
+        }
+
 
 class AadharForm(forms.ModelForm):
     class Meta:
@@ -48,4 +62,10 @@ class OTPForm(forms.ModelForm):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = MedicinePrescription
-        exclude = ["pres_id","medicine_id"]
+        exclude = ["pres_id", "medicine_id"]
+
+
+class MedicineCsvForm(forms.ModelForm):
+    class Meta:
+        model = MedicineCsv
+        fields = ["file"]

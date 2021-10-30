@@ -3,6 +3,9 @@ import random
 from django.contrib.auth import logout, authenticate, login
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.conf import settings
+
+import csv
 
 from .forms import *
 
@@ -44,11 +47,15 @@ def login_view(request):
 
         user = authenticate(username=request.POST["email"], password=request.POST["password"])
         print(user, request.POST["password"], request.POST["email"])
+        login_form = LoginForm(request.POST)
         if not user:
-            login_form = LoginForm(request.POST)
             return render(request, 'login.html', context={"message": "Invalid credentials", "login_form": login_form})
 
         else:
+            if not user.approved:
+                return render(request, 'login.html',
+                              context={"message": "You're not approved yet", "login_form": login_form})
+
             login(request, user=user)
             return home(request)
 
@@ -87,6 +94,7 @@ def logout_view(request):
 
 
 def home(request):
+
     return render(request, 'index.html', context={"user": request.user})
 
 
@@ -103,6 +111,13 @@ def aadhar(request):
     request.session.pop("otp", None)
     request.session.modified = True
     if request.method == "POST":
+
+        if request.POST.get("address", False):
+            patient = Patient.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"],
+                                             address=request.POST["address"], dob=request.POST["dob"],
+                                             gender=request.POST["gender"], email=request.POST["email"],
+                                             aadhar_no=request.POST["aadhar_no"], phone_no=request.POST["phone_no"])
+
         otp = generateOTP()
         print(request.POST["aadhar_no"])
         otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"]).first()
@@ -121,9 +136,12 @@ def aadhar(request):
                 [patient.email],
                 fail_silently=False,
             )
+
         else:
-            context["message"] = "Invalid Aadhar Number"
-            return render(request, 'aadhar_number_request_patient.html', context)
+            patient_form = PatientForm(request.POST)
+            # print(request.user.license_no)
+            context = {'patient_form': patient_form}
+            return render(request, 'patient.html', context)
 
         return render(request, "request_otp.html",
                       context={"aadhar": request.POST["aadhar_no"], "otp_form": OTPForm(request.POST)})
@@ -274,3 +292,44 @@ def get_all_medicines():
         arr.append(dict1)
 
     return arr
+
+
+def add_medicines_csv(request):
+    if request.POST:
+        medicineCsv = MedicineCsv.objects.create(file=request.FILES["file"])
+
+    context = {}
+    csv_form = MedicineCsvForm(request.POST, request.FILES)
+    context['form'] = csv_form
+    return render(request, "add_medicines_csv.html", context)
+
+
+def add_medicines_from_csv_view(request):
+    message = ""
+    if request.POST:
+        file_path = request.POST["file"]
+        file_loc = str(settings.BASE_DIR) + "\\medicine_csv\\" + file_path
+        print(file_loc)
+        count = add_medicines_from_csv(file_loc)
+        message = str(count) + " medicines added"
+
+    medicine_csv = MedicineCsv.objects.all()
+
+    arr = []
+    for csv in medicine_csv:
+        arr.append({"path": csv.file, "name": str(csv.file).split("/")[-1]})
+
+    return render(request, "add_medicines_from_csv.html", context={"files": arr, "message":message})
+
+
+def add_medicines_from_csv(path):
+    medicines = Medicine.objects.all()
+    count = 0
+    with open(path) as f:
+        reader = csv.DictReader(f, delimiter=',')
+
+        for row in reader:
+            if not medicines.filter(name=row["name"].lower()):
+                Medicine.objects.create(name=row["name"], type=row["type"], allowed_frequency=row["allowed_frequency"])
+                count += 1
+    return count
