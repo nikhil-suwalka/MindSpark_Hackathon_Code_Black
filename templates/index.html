@@ -1,0 +1,36 @@
+{% include "base.html" %}
+{% load static %}
+{% block main %}
+    <section class="portfolio-block block-intro">
+        <div class="container">
+            <div class="avatar" style="background-image:{%  static 'assets/img/avatars/avatar.jpg'%} "></div>
+            <div class="about-me">
+                <p>Hello! I am <strong>John Smith</strong>. I work as interface and front end developer. I have passion
+                    for pixel perfect, minimal and easy to use interfaces.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-block website gradient">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-lg-5 offset-lg-1 text">
+                    <h3>PrescriptionPortal</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est
+                        sed, efr nunc, vivamus vel accumsan dui. Quisque ac dolor cursus, volutpat nisl vel, porttitor
+                        eros.</p>
+                </div>
+                <div class="col-md-12 col-lg-5">
+                    <div class="portfolio-laptop-mockup">
+                        <div class="screen">
+                            <div class="screen-content"
+                                 style="background-image:{%  static 'assets/img/avatars/avatar.jpg'%}"></div>
+                        </div>
+                        <div class="keyboard"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
