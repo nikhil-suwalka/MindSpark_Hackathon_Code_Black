@@ -55,4 +55,5 @@ class Prescription(models.Model):
 class MedicinePrescription(models.Model):
     pres_id = models.ForeignKey(Prescription, on_delete=models.CASCADE, related_name="med_pres_prescription_id")
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="med_pres_patient_id")
+    medicine_id = models.ForeignKey(Medicine, on_delete=models.CASCADE, related_name="med_pres_medicine_id")
     quantity = models.IntegerField(blank=False, null=False)

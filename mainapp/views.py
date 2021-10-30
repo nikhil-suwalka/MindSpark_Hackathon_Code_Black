@@ -101,12 +101,14 @@ def generateOTP():
 def aadhar(request):
     if request.method == "POST":
         otp = generateOTP()
-        otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"]).get()
+        print(request.POST["aadhar_no"])
+        otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"]).first()
+        request.session['aadhar'] = request.POST["aadhar_no"]
         if otp_object:
             otp_object.otp = otp
             otp_object.save()
         else:
-            OTP.objects.update_or_create(aadhar=request.POST["aadhar_no"], otp=otp)
+            OTP.objects.create(aadhar=request.POST["aadhar_no"], otp=otp)
 
         patient = Patient.objects.filter(aadhar_no=request.POST["aadhar_no"]).first()
         if patient:
@@ -131,13 +133,62 @@ def aadhar(request):
 def aadhar_otp(request):
     otp = OTP.objects.filter(aadhar=request.POST["aadhar"]).first().otp
     print(request.POST, otp)
-
+    request.session["otp"] = request.POST["otp"]
     if request.POST["otp"] == str(otp):
-        print("Worked!")
-        pass
-        # TODO go ahead
+        return render(request, "patient_pharma_prescriptions.html",
+                      context={"aadhar": request.POST["aadhar"],
+                               "prescriptions": getPrescriptions(request.POST["aadhar"])
+                               })
     else:
-        print("Nope!")
         return render(request, "request_otp.html",
                       context={"Message": "Incorrect OTP", "aadhar": request.POST["aadhar"],
                                "otp_form": OTPForm(request.POST)})
+
+
+# def prescriptions(request):
+#     pass
+
+def prescription(request, p_id):
+    print(getMedicinesFromPrescription(p_id))
+    return render(request, "patient_pharma_prescription.html",
+                  context={
+                      "prescription": getMedicinesFromPrescription(p_id), "prescription_id": p_id
+                  })
+
+
+def order_complete(request, p_id):
+    p = Prescription.objects.filter(pk=p_id).get()
+    p.given = True
+    p.save()
+
+    return render(request, "patient_pharma_prescriptions.html",
+                  context={"aadhar": request.session["aadhar"],
+                           "prescriptions": getPrescriptions(request.session["aadhar"])})
+
+
+def getPrescriptions(aadhar_no):
+    patient = Patient.objects.filter(aadhar_no=aadhar_no).first()
+    prescriptions = Prescription.objects.filter(patient_id=patient.id).all()
+    arr = []
+    for prescription in prescriptions:
+        dict1 = {"prescription_id": prescription.id, "date": prescription.date.strftime("%d/%m/%Y"),
+                 "allowed_frequency": prescription.allowed_frequency, "given": prescription.given}
+        doc = User1.objects.filter(email=prescription.doctor_id).get()
+        dict1["doctor_name"] = doc.first_name + " " + doc.last_name
+
+        arr.append(dict1)
+    return arr
+
+
+def getMedicinesFromPrescription(prescription_id):
+    medicines = MedicinePrescription.objects.filter(pres_id=prescription_id).all()
+    arr = []
+    for medicine in medicines:
+        dict1 = {"quantity": medicine.quantity}
+        print(medicine.medicine_id)
+        current_medicine = Medicine.objects.filter(pk=medicine.medicine_id.pk).get()
+        dict1["name"] = current_medicine.name
+        dict1["type"] = current_medicine.type
+        arr.append(dict1)
+
+    return arr
