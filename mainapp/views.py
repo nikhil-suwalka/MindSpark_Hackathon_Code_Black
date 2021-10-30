@@ -49,8 +49,28 @@ def login_view(request):
 
     return render(request, 'login.html', context)
 
+
 def profile(request):
-    pass
+    if request.method == "POST":
+        # updated some entries in profile
+        user = User1.objects.get(pk=request.user.license_no)
+        user.first_name = request.POST["first_name"]
+        user.last_name = request.POST["last_name"]
+        user.address = request.POST["address"]
+        user.pincode = request.POST["pincode"]
+        user.city = request.POST["city"]
+        user.state = request.POST["state"]
+        user.qualification = request.POST["qualification"]
+        user.dob = request.POST["dob"]
+        user.save()
+
+    user = User1.objects.filter(pk=request.user.license_no).get()
+    profile_form = ProfileForm(request.POST)
+    # print(request.user.license_no)
+    user_dict = user.__dict__
+    context = {'profile_form': profile_form, 'user_dict': user_dict}
+
+    return render(request, 'profile.html', context)
 
 
 def logout_view(request):

@@ -29,5 +29,11 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = User1
-        fields = ['email', "password", "license_no", "first_name", "last_name", "address", "pincode", "city", "state",
+        fields = ['email', "license_no", "first_name", "last_name", "address", "pincode", "city", "state",
                   "qualification", "dob"]
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['aadhar_no']
+

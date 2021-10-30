@@ -24,21 +24,21 @@
     <div class="container">
         <a class="navbar-brand logo" href="/"
            style="font-weight: bold;font-family: 'Bellota Text', serif;font-size: 27px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2"
-             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
-             class="icon icon-tabler icon-tabler-layout-cards" style="width: 40;height: 50;">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <rect x="4" y="4" width="6" height="16" rx="2"></rect>
-            <rect x="14" y="4" width="6" height="10" rx="2"></rect>
-        </svg>
-        PrescriptionPortal
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2"
+                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icon-tabler-layout-cards" style="width: 40;height: 50;">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <rect x="4" y="4" width="6" height="16" rx="2"></rect>
+                <rect x="14" y="4" width="6" height="10" rx="2"></rect>
+            </svg>
+            PrescriptionPortal
         </a>
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span
                 class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}" style="font-size: 21px;"><i
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}" style="font-size: 21px;"><i
                             class="fa fa-user-circle"></i>&nbsp;{{ user.first_name }}</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" style="font-size: 21px;"></i>
                         Logout</a></li>
