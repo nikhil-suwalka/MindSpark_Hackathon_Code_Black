@@ -1,5 +1,9 @@
+import random
+
 from django.contrib.auth import logout, authenticate, login
+from django.core.mail import send_mail
 from django.shortcuts import render
+
 from .forms import *
 
 
@@ -10,7 +14,8 @@ def register(request):
     register_form = RegisterForm(request.POST, request.FILES)
     if request.method == "POST":
         if User1.objects.filter(email=request.POST["email"]).all() is not None:
-            return render(request, 'register.html', context={"message": "Email already exists in the system", "register_form": register_form})
+            return render(request, 'register.html',
+                          context={"message": "Email already exists in the system", "register_form": register_form})
         user = User1.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"],
                                     license_no=request.POST["license_no"],
                                     address=request.POST["address"],
@@ -84,8 +89,43 @@ def logout_view(request):
 def home(request):
     return render(request, 'index.html', context={"user": request.user})
 
+
 def prescribe(request):
     pass
 
-def orders(request):
+
+def generateOTP():
+    return random.randint(100000, 999999)
+
+
+def aadhar(request):
+    if request.method == "POST":
+        otp = generateOTP()
+        otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"])
+        if otp_object:
+            otp_object.get().otp = otp
+        else:
+            OTP.objects.update_or_create(aadhar=request.POST["aadhar_no"], otp=otp)
+
+        patient = Patient.objects.filter(aadhar_no=request.POST["aadhar_no"]).first()
+        if patient:
+            send_mail(
+                'Prescription Portal : OTP request',
+                "Your OTP is: " + str(otp),
+                request.user.email,
+                [patient.email],
+                fail_silently=False,
+            )
+        else:
+            pass
+        #     TODO: nahi mila
+
+        return render(request, "request_otp.html",
+                      context={"aadhar": request.POST["aadhar_no"], "otp_form": OTPForm(request.POST)})
+
+    context = {'aadhar_form': AadharForm(request.POST)}
+    return render(request, 'aadhar_number_request_patient.html', context)
+
+
+def aadhar_otp(request):
     pass

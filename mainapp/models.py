@@ -18,6 +18,11 @@ class Patient(models.Model):
         return str(self.first_name)
 
 
+class OTP(models.Model):
+    aadhar = models.CharField(blank=False, null=False, primary_key=True, max_length=100)
+    otp = models.IntegerField()
+
+
 class User1(AbstractUser):
     license_no = models.CharField(blank=False, null=False, max_length=100, primary_key=True)
     address = models.CharField(blank=False, max_length=100, null=False, )

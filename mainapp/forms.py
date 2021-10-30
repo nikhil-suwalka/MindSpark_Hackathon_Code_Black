@@ -32,8 +32,12 @@ class ProfileForm(forms.ModelForm):
         fields = ['email', "license_no", "first_name", "last_name", "address", "pincode", "city", "state",
                   "qualification", "dob"]
 
-class OrderForm(forms.ModelForm):
+class AadharForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = ['aadhar_no']
 
+class OTPForm(forms.ModelForm):
+    class Meta:
+        model = OTP
+        fields = ['otp']
