@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render
 from .forms import *
 
@@ -30,8 +31,11 @@ def register(request):
 def login(request):
     pass
 
-def logout(request):
-    pass
+
+def logout_view(request):
+    logout(request)
+    return home(request)
+
 
 def home(request):
     return render(request, 'index.html', context={"user": request.user})
