@@ -24,14 +24,14 @@
     <div class="container">
         <a class="navbar-brand logo" href="/"
            style="font-weight: bold;font-family: 'Bellota Text', serif;font-size: 27px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2"
-             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
-             class="icon icon-tabler icon-tabler-layout-cards" style="width: 40;height: 50;">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <rect x="4" y="4" width="6" height="16" rx="2"></rect>
-            <rect x="14" y="4" width="6" height="10" rx="2"></rect>
-        </svg>
-        PrescriptionPortal
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2"
+                 stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icon-tabler-layout-cards" style="width: 40;height: 50;">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <rect x="4" y="4" width="6" height="16" rx="2"></rect>
+                <rect x="14" y="4" width="6" height="10" rx="2"></rect>
+            </svg>
+            PrescriptionPortal
         </a>
         <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span
                 class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -51,6 +51,36 @@
         </div>
     </div>
 </nav>
+{% if user.is_authenticated %}
+    <section style="background: linear-gradient(94deg, rgba(125,113,245,0.39), rgba(19,157,254,0.16));">
+        <div class="col-md-12 col-lg-8 offset-lg-2"
+             style="text-align: center;margin-bottom: 10px;padding-bottom: 20px;padding-top: 20px;">
+            {% if user.type == 0 %}
+                <button onclick="location.href = '{% url 'prescribe' %}'" class="btn btn-danger"
+                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
+                        type="button">Prescribe
+                </button>
+{#                <button class="btn btn-danger"#}
+{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;font-size: 13px;"#}
+{#                        type="button">Registered Events#}
+{#                </button>#}
+{#                <button class="btn btn-danger"#}
+{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
+{#                        type="button">Search#}
+{#                </button>#}
+{#                <button class="btn btn-danger"#}
+{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;"#}
+{#                        type="button">Filled Forms#}
+{#                </button>#}
+            {% else %}
+                <button onclick="location.href = '{% url 'orders' %}'" class="btn btn-danger"
+                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
+                        type="button">Orders
+                </button>
+            {% endif %}
+        </div>
+    </section>
+{% endif %}
 <main class="page lanidng-page">
     {% block main %}
 

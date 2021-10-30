@@ -24,7 +24,8 @@ def register(request):
                                     )
         user.set_password(request.POST["password"])
         user.save()
-        return render(request, 'login.html')
+        login_form = LoginForm(request.POST)
+        return render(request, 'login.html', {"login_form": login_form})
 
     register_form = RegisterForm(request.POST, request.FILES)
     context = {'register_form': register_form}
