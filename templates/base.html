@@ -23,6 +23,14 @@
     <link rel="stylesheet" href="{% static 'css/Lista-Productos-Canito.css' %}">
     <link rel="stylesheet" href="{% static 'css/News-Cards.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+            integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% block head %}
+    {% endblock %}
 </head>
 
 <body>
@@ -59,36 +67,36 @@
 </nav>
 
 <main class="page lanidng-page">
-{% if user.is_authenticated %}
-    <section style="background: linear-gradient(94deg, rgba(125,113,245,0.39), rgba(19,157,254,0.16));">
-        <div class="col-md-12 col-lg-8 offset-lg-2"
-             style="text-align: center;padding-bottom: 20px;padding-top: 20px;">
-            {% if user.type == 0 %}
-                <button onclick="location.href = '{% url 'prescribe' %}'" class="btn btn-danger"
-                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
-                        type="button">Prescribe
-                </button>
-{#                <button class="btn btn-danger"#}
-{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;font-size: 13px;"#}
-{#                        type="button">Registered Events#}
-{#                </button>#}
-{#                <button class="btn btn-danger"#}
-{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
-{#                        type="button">Search#}
-{#                </button>#}
-{#                <button class="btn btn-danger"#}
-{#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;"#}
-{#                        type="button">Filled Forms#}
-{#                </button>#}
-            {% else %}
-                <button onclick="location.href = '{% url 'orders' %}'" class="btn btn-danger"
-                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
-                        type="button">Orders
-                </button>
-            {% endif %}
-        </div>
-    </section>
-{% endif %}
+    {% if user.is_authenticated %}
+        <section style="background: linear-gradient(94deg, rgba(125,113,245,0.39), rgba(19,157,254,0.16));">
+            <div class="col-md-12 col-lg-8 offset-lg-2"
+                 style="text-align: center;padding-bottom: 20px;padding-top: 20px;">
+                {% if user.type == 0 %}
+                    <button onclick="location.href = '{% url 'prescribe' %}'" class="btn btn-danger"
+                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
+                            type="button">Prescribe
+                    </button>
+                    {#                <button class="btn btn-danger"#}
+                    {#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;font-size: 13px;"#}
+                    {#                        type="button">Registered Events#}
+                    {#                </button>#}
+                    {#                <button class="btn btn-danger"#}
+                    {#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
+                    {#                        type="button">Search#}
+                    {#                </button>#}
+                    {#                <button class="btn btn-danger"#}
+                    {#                        style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #149eff;"#}
+                    {#                        type="button">Filled Forms#}
+                    {#                </button>#}
+                {% else %}
+                    <button onclick="location.href = '{% url 'orders' %}'" class="btn btn-danger"
+                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
+                            type="button">Orders
+                    </button>
+                {% endif %}
+            </div>
+        </section>
+    {% endif %}
     {% block main %}
 
     {% endblock %}

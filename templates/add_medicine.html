@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load custom_tags %}
+{% load widget_tweaks %}
+{% block head %}
+
+    <script>
+        $(document).ready(function () {
+            $('#id_medicine').select2();
+        });
+    </script>
+
+{% endblock %}
+{% block main %}
+
+    <div style="margin-top: 50px;margin-bottom: 30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-header">
+                        <h2>Add Medicine to Prescription</h2>
+                        <form class="form-horizontal" action="{% url 'prescription_create_with_id' prescription_id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="medicine_id">Medicine</label>
+                                    <select class="form-control" name="id_medicine" id="id_medicine">
+                                        <option selected disabled>--- Select Medicine ---</option>
+                                        {% for medicine in medicines %}
+                                            <option value="{{ medicine.id }}"  name="{{ medicine.id }}">{{ medicine.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            {% for field in medicine_form %}
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {% render_field field class="form-control" %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <br>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-primary" type="submit">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

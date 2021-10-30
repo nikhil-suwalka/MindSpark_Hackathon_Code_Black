@@ -32,17 +32,20 @@ class ProfileForm(forms.ModelForm):
         fields = ['email', "license_no", "first_name", "last_name", "address", "pincode", "city", "state",
                   "qualification", "dob"]
 
+
 class AadharForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = ['aadhar_no']
+
 
 class OTPForm(forms.ModelForm):
     class Meta:
         model = OTP
         fields = ['otp']
 
-class PrescriptionForm(forms.ModelForm):
+
+class MedicineForm(forms.ModelForm):
     class Meta:
         model = MedicinePrescription
-        fields ="__all__"
+        exclude = ["pres_id","medicine_id"]

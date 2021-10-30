@@ -30,5 +30,6 @@ urlpatterns = [
     path('orders/complete/<int:p_id>', order_complete, name="order_complete"),
     path('prescribe/', aadhar, name="prescribe"),
     path('prescribe/create', prescription_create, name="prescription_create"),
-
+    path('prescribe/create/<int:p_id>', prescription_create_with_id, name="prescription_create_with_id"),
+    path('prescribe/delete/<int:p_id>', prescription_delete_with_id, name="prescription_delete_with_id"),
 ]
