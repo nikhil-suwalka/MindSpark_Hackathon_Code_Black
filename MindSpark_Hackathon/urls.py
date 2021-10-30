@@ -26,5 +26,5 @@ urlpatterns = [
     path('profile/', profile, name="profile"),
     path('prescribe/', prescribe, name="prescribe"),
     path('orders/', aadhar, name="orders"),
-    path('orders/otp', aadhar_otp, name="orders_otp")
+    path('orders/otp', aadhar_otp, name="aadhar_otp")
 ]

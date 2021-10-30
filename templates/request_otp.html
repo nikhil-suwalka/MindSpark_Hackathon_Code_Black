@@ -9,7 +9,7 @@
                 <div class="page-header">
                     <h2>Enter OTP</h2>
                     <h3>{{ message }}</h3>
-                    <form  class="form-horizontal" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'aadhar_otp' %}"  class="form-horizontal" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% for field in otp_form %}
                             <div class="form-group row">
@@ -19,6 +19,7 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        <input type="text" name="aadhar" value="{{ aadhar }}" hidden>
                         <br>
                         <div class="form-group row">
                             <div class="col-sm-6">

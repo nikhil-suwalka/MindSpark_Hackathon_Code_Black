@@ -101,9 +101,10 @@ def generateOTP():
 def aadhar(request):
     if request.method == "POST":
         otp = generateOTP()
-        otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"])
+        otp_object = OTP.objects.filter(aadhar=request.POST["aadhar_no"]).get()
         if otp_object:
-            otp_object.get().otp = otp
+            otp_object.otp = otp
+            otp_object.save()
         else:
             OTP.objects.update_or_create(aadhar=request.POST["aadhar_no"], otp=otp)
 
@@ -128,4 +129,15 @@ def aadhar(request):
 
 
 def aadhar_otp(request):
-    pass
+    otp = OTP.objects.filter(aadhar=request.POST["aadhar"]).first().otp
+    print(request.POST, otp)
+
+    if request.POST["otp"] == str(otp):
+        print("Worked!")
+        pass
+        # TODO go ahead
+    else:
+        print("Nope!")
+        return render(request, "request_otp.html",
+                      context={"Message": "Incorrect OTP", "aadhar": request.POST["aadhar"],
+                               "otp_form": OTPForm(request.POST)})
