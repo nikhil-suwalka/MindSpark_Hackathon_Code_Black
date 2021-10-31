@@ -36,6 +36,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Quantity</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -47,6 +48,7 @@
                             <tr>
                                 <td>{{ medicine.name }}</td>
                                 <td>{{ medicine.quantity }}</td>
+                                <td>{{ medicine.note }}</td>
                                 <td>
                                     <button type="button" class="btn btn-danger"><i
                                             onclick="location.href='{% url 'prescription_delete_with_id' medicine.id %}'"

@@ -198,11 +198,11 @@ def getMedicinesFromPrescription(prescription_id):
     arr = []
     for medicine in medicines:
         dict1 = {"quantity": medicine.quantity}
-        print(medicine.medicine_id)
         current_medicine = Medicine.objects.filter(pk=medicine.medicine_id.pk).get()
         dict1["name"] = current_medicine.name
         dict1["type"] = current_medicine.type
         dict1["allowed_frequency"] = current_medicine.allowed_frequency
+        dict1["note"] = medicine.note
         arr.append(dict1)
 
     return arr
@@ -244,10 +244,9 @@ def prescription_create(request):
 
 def prescription_create_with_id(request, p_id):
     if request.method == "POST":
-        print("FIRST TIME")
         patient = Patient.objects.filter(aadhar_no=request.session["aadhar"]).first()
         print(request.POST)
-        add_medicion_in_prescription(p_id, request.POST["id_medicine"], request.POST["quantity"])
+        add_medicion_in_prescription(p_id, request.POST["id_medicine"], request.POST["quantity"],request.POST["note"])
         context = {"prescription_id": p_id, "patient_name": patient.first_name + " " + patient.last_name,
                    "medicines": get_medicines_from_prescription_id(p_id), "user_type": request.user.type}
         return render(request, 'add_prescription.html', context)
@@ -275,15 +274,15 @@ def get_medicines_from_prescription_id(pres_id):
     medicine_pres_ob = MedicinePrescription.objects.filter(pres_id=pres_id).all()
 
     for medicine in medicine_pres_ob:
-        dict1 = {"name": str(medicine.medicine_id), "quantity": medicine.quantity, "id": medicine.pk}
+        dict1 = {"name": str(medicine.medicine_id), "quantity": medicine.quantity, "id": medicine.pk, "note": medicine.note}
         arr.append(dict1)
 
     return arr
 
 
-def add_medicion_in_prescription(pres_id, med_id, qty):
+def add_medicion_in_prescription(pres_id, med_id, qty, note):
     MedicinePrescription.objects.create(pres_id=Prescription.objects.filter(pk=pres_id).first(),
-                                        medicine_id=Medicine.objects.filter(pk=med_id).first(), quantity=qty)
+                                        medicine_id=Medicine.objects.filter(pk=med_id).first(), quantity=qty, note=note)
 
 
 def get_all_medicines():
