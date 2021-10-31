@@ -2,6 +2,7 @@ import random
 
 from django.contrib.auth import logout, authenticate, login
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.conf import settings
 
@@ -16,13 +17,12 @@ from .forms import *
 def register(request):
     register_form = RegisterForm(request.POST, request.FILES)
     if request.method == "POST":
-        if User1.objects.filter(email=request.POST["email"]).all().first() is not None:
+        if User1.objects.filter(email=request.POST["email"]).all().first():
             print(User1.objects.filter(email=request.POST["email"]).all())
             return render(request, 'register.html',
                           context={"message": "Email already exists in the system", "register_form": register_form})
 
         print(request.FILES["certificate"])
-        pass
         user = User1.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"],
                                     license_no=request.POST["license_no"],
                                     address=request.POST["address"],
@@ -39,8 +39,8 @@ def register(request):
                                     )
         user.set_password(request.POST["password"])
         user.save()
-        login_form = LoginForm(request.POST)
-        return render(request, 'login.html', {"login_form": login_form})
+
+        return HttpResponseRedirect('/login')
 
     context = {'register_form': register_form}
     return render(request, 'register.html', context)
