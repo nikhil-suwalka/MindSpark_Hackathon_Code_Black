@@ -1,4 +1,4 @@
-# PriscriptionPortal
+# ![logo](logo.png)
 **PriscriptionPortal** is a centralised digital prescription system for feasible connect between the doctors and the pharmacist without patient's interference.
 
 ## Maintainers
@@ -8,9 +8,7 @@
 [Shristi Bisht](https://github.com/ShristiBisht/)
 
 ## Why?
-Patients might repeat the same prescription multiple times without doctors' knowledge which might be dangerous.
-In need to prevent this situation, we introduce a portal where doctors can directly connect with the pharmacist specifying whether medicine should be repeated or not.
-Patient can not meddle in between or can repeat the prescription without a doctors appointment.
+End to End Centralized Digital solution which connects doctors and pharmacists to the patients, enables creation of paperless prescriptions, easy and secure way to get prescribes medicines at any pharmacy.
 
 ## Salient features :book:
 ### Paper Less Prescriptions
