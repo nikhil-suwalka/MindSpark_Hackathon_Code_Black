@@ -59,6 +59,7 @@ class MedicinePrescription(models.Model):
     pres_id = models.ForeignKey(Prescription, on_delete=models.CASCADE, related_name="med_pres_prescription_id")
     medicine_id = models.ForeignKey(Medicine, on_delete=models.CASCADE, related_name="med_pres_medicine_id")
     quantity = models.IntegerField(blank=False, null=False)
+    note = models.CharField(blank=True, null=True, max_length=100)
 
 
 class MedicineCsv(models.Model):
