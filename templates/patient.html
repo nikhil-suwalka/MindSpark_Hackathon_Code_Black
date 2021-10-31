@@ -8,13 +8,14 @@
                 <div class="col-sm-12">
                     <div class="page-header">
                         <h2>Patient Details</h2>
+                        <h5>Patient doesn't exist, Fill the following details to create a new one</h5>
                         <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {% for field in patient_form %}
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {% render_field field class="form-control" %}
+                                        {% render_field field class="form-control" %}
                                     </div>
                                 </div>
                             {% endfor %}

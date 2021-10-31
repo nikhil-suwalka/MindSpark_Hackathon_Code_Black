@@ -58,7 +58,8 @@ def login_view(request):
         else:
             if not user.approved:
                 return render(request, 'login.html',
-                              context={"message": "You're not approved yet", "login_form": login_form})
+                              context={"message": "You're not approved yet, contact the administrator",
+                                       "login_form": login_form})
 
             login(request, user=user)
             return home(request)
@@ -246,7 +247,7 @@ def prescription_create_with_id(request, p_id):
     if request.method == "POST":
         patient = Patient.objects.filter(aadhar_no=request.session["aadhar"]).first()
         print(request.POST)
-        add_medicion_in_prescription(p_id, request.POST["id_medicine"], request.POST["quantity"],request.POST["note"])
+        add_medicion_in_prescription(p_id, request.POST["id_medicine"], request.POST["quantity"], request.POST["note"])
         context = {"prescription_id": p_id, "patient_name": patient.first_name + " " + patient.last_name,
                    "medicines": get_medicines_from_prescription_id(p_id), "user_type": request.user.type}
         return render(request, 'add_prescription.html', context)
@@ -274,7 +275,8 @@ def get_medicines_from_prescription_id(pres_id):
     medicine_pres_ob = MedicinePrescription.objects.filter(pres_id=pres_id).all()
 
     for medicine in medicine_pres_ob:
-        dict1 = {"name": str(medicine.medicine_id), "quantity": medicine.quantity, "id": medicine.pk, "note": medicine.note}
+        dict1 = {"name": str(medicine.medicine_id), "quantity": medicine.quantity, "id": medicine.pk,
+                 "note": medicine.note}
         arr.append(dict1)
 
     return arr
