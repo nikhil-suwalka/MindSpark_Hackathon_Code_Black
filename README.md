@@ -1,4 +1,4 @@
-# PriscriptionPortal
+# ![logo](logo.png)
 **PriscriptionPortal** is a centralised digital prescription system for feasible connect between the doctors and the pharmacist without patient's interference.
 
 ## Maintainers
