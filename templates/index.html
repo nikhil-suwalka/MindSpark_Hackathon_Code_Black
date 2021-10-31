@@ -8,17 +8,14 @@
             <div class="row align-items-center" >
                 <div class="col-md-12 col-lg-5 offset-lg-1 text">
                     <h3>PrescriptionPortal</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat
-                        est
-                        sed, efr nunc, vivamus vel accumsan dui. Quisque ac dolor cursus, volutpat nisl vel,
-                        porttitor
-                        eros.</p>
+                    <p>End to End Centralized Digital solution which connects doctors and pharmacists to the patients,
+                        enables creation of paperless prescriptions, easy and secure way to get prescribes medicines at any pharmacy </p>
                 </div>
                 <div class="col-md-12 col-lg-5">
                     <div class="portfolio-laptop-mockup">
                         <div class="screen">
                             <div class="screen-content"
-                                 style="background-image:{% static 'img/avatars/avatar.jpg' %}"></div>
+                                 style="background-image:url('{% static 'img/screen.png' %}');"></div>
                         </div>
                         <div class="keyboard"></div>
                     </div>
@@ -26,5 +23,45 @@
             </div>
         </div>
     </section>
+    <section class="portfolio-block skills">
+            <div class="container">
+                <div class="heading">
+                    <h2>Features</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card special-skill-item border-0">
+                            <div class="card-header bg-transparent border-0"><i class="icon ion-ios-star-outline"></i></div>
+                            <div class="card-body">
+                                <h3 class="card-title">Paper Less Prescriptions</h3>
+                                <p class="card-text">
+                                    Centralized Digital solution which connects doctors and pharmacists to the patients.
 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card special-skill-item border-0">
+                            <div class="card-header bg-transparent border-0"><i class="icon ion-ios-gear-outline"></i></div>
+                            <div class="card-body">
+                                <h3 class="card-title">Security</h3>
+                                <p class="card-text">
+                                    Role based access control enabling only the crucial information to be shared to stakeholders.
+                                </p></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card special-skill-item border-0">
+                            <div class="card-header bg-transparent border-0"><i class="icon ion-android-time"></i></div>
+                            <div class="card-body">
+                                <h3 class="card-title">Medical History</h3>
+                                <p class="card-text">
+                                    Medical History of the patients at doctor's fingertips, access to all past prescriptions.
+                                </p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 {% endblock %}

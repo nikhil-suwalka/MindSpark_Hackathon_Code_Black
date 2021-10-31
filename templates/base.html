@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Brand</title>
+    <title>PrescriptionPortal</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'fonts/fontawesome5-overrides.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/Lista-Productos-Canito.css' %}">
     <link rel="stylesheet" href="{% static 'css/News-Cards.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -72,20 +73,20 @@
             <div class="col-md-12 col-lg-8 offset-lg-2"
                  style="text-align: center;padding-bottom: 20px;padding-top: 20px;">
                 {% if user.is_staff %}
-{#                    <button onclick="location.href = '{% url 'add_medicine' %}'" class="btn btn-danger"#}
-{#                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
-{#                            type="button">Upload Medicines#}
-{#                    </button>#}
+                    {#                    <button onclick="location.href = '{% url 'add_medicine' %}'" class="btn btn-danger"#}
+                    {#                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
+                    {#                            type="button">Upload Medicines#}
+                    {#                    </button>#}
                     <button onclick="location.href = '{% url 'approve' %}'" class="btn btn-danger"
                             style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #c93cff;"
                             type="button">Approve Applications
                     </button>
-                {% elif user.type == 0 %}
+                {% elif user.type == 1 %}
                     <button onclick="location.href = '{% url 'orders' %}'" class="btn btn-danger"
                             style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
                             type="button">Orders
                     </button>
-                {%  elif user.type == 1 %}
+                {% elif user.type == 0 %}
                     <button onclick="location.href = '{% url 'prescribe' %}'" class="btn btn-danger"
                             style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
                             type="button">Prescribe
@@ -97,15 +98,9 @@
     {% block main %}
 
     {% endblock %}
+
 </main>
-{#<footer class="page-footer">#}
-{#    <div class="container">#}
-{#        <div class="links"><a href="#">About us</a><a href="#">Contact us</a></div>#}
-{#        <div class="social-icons"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i#}
-{#                class="icon ion-social-instagram-outline"></i></a><a href="#"><i#}
-{#                class="icon ion-social-twitter"></i></a></div>#}
-{#    </div>#}
-{#</footer>#}
+
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
 <script src="{% static 'js/theme.js' %}"></script>
