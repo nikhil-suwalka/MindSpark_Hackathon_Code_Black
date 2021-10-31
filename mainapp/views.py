@@ -301,7 +301,7 @@ def approve(request, license_no=None):
         user = User1.objects.filter(license_no=license_no).first()
         user.approved = True
         user.save()
-    users = User1.objects.filter(approved=False,is_superuser=False, is_staff=False)
+    users = User1.objects.filter(approved=False, is_superuser=False, is_staff=False)
     users_list = []
 
     for user in users:
@@ -339,7 +339,7 @@ def add_medicines_from_csv_view(request):
     for csv in medicine_csv:
         arr.append({"path": csv.file, "name": str(csv.file).split("/")[-1]})
 
-    return render(request, "add_medicines_from_csv.html", context={"files": arr, "message":message})
+    return render(request, "add_medicines_from_csv.html", context={"files": arr, "message": message})
 
 
 def add_medicines_from_csv(path):

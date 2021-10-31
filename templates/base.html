@@ -73,14 +73,20 @@
             <div class="col-md-12 col-lg-8 offset-lg-2"
                  style="text-align: center;padding-bottom: 20px;padding-top: 20px;">
                 {% if user.is_staff %}
-                    {#                    <button onclick="location.href = '{% url 'add_medicine' %}'" class="btn btn-danger"#}
-                    {#                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"#}
-                    {#                            type="button">Upload Medicines#}
-                    {#                    </button>#}
+
                     <button onclick="location.href = '{% url 'approve' %}'" class="btn btn-danger"
-                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #c93cff;"
+                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
                             type="button">Approve Applications
                     </button>
+                    <button onclick="location.href = '{% url 'add_medicines_csv' %}'" class="btn btn-danger"
+                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #cd45ff;"
+                            type="button">Upload Medicines CSV
+                    </button>
+                    <button onclick="location.href = '{% url 'add_medicines_from_csv_view' %}'" class="btn btn-danger"
+                            style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
+                            type="button">Add medicines
+                    </button>
+
                 {% elif user.type == 1 %}
                     <button onclick="location.href = '{% url 'orders' %}'" class="btn btn-danger"
                             style="border: none;width: 151px;height: 58px;margin-left: 14px;color: rgb(255,255,255);margin-top: 12px;background: #7c71f5;"
