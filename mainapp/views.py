@@ -51,8 +51,8 @@ def login_view(request):
 
         user = authenticate(username=request.POST["email"], password=request.POST["password"])
         print(user, request.POST["password"], request.POST["email"])
+        login_form = LoginForm(request.POST)
         if not user:
-            login_form = LoginForm(request.POST)
             return render(request, 'login.html', context={"message": "Invalid credentials", "login_form": login_form})
 
         else:
@@ -301,7 +301,7 @@ def approve(request, license_no=None):
         user = User1.objects.filter(license_no=license_no).first()
         user.approved = True
         user.save()
-    users = User1.objects.filter(approved=False,is_superuser=False)
+    users = User1.objects.filter(approved=False,is_superuser=False, is_staff=False)
     users_list = []
 
     for user in users:
